@@ -1,4 +1,4 @@
-# Super Vacanta
+# Recharge
 
 Leave & absence management for Romanian SMEs — a [Timetastic](https://timetastic.co.uk)-inspired app built with Next.js, NestJS, and PostgreSQL.
 
