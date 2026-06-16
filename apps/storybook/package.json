@@ -1,0 +1,29 @@
+{
+  "name": "@recharge/storybook",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build": "storybook build"
+  },
+  "dependencies": {
+    "@recharge/ui": "*",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^9.1.1",
+    "@mui/material": "^9.1.1",
+    "react": "^19",
+    "react-dom": "^19"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^5.2.1",
+    "@storybook/addon-a11y": "^10.4.5",
+    "@storybook/addon-docs": "^10.4.5",
+    "@storybook/react-vite": "^10.4.5",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "storybook": "^10.4.5",
+    "typescript": "^5",
+    "vite": "^8.0.16"
+  }
+}

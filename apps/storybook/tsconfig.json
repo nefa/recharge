@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "noEmit": true,
+    "paths": {
+      "@recharge/ui": ["../../packages/ui/src/index.ts"]
+    }
+  },
+  "include": [".storybook", "stories"]
+}
