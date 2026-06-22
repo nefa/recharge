@@ -2,7 +2,7 @@
 
 ## 1. Vision
 
-**Recharge** (`supervacanta.ro`) is a leave & absence management platform for Romanian small and medium businesses — think **"Timetastic, but built for Romania"**. It replaces Excel sheets, WhatsApp messages, and paper request forms with a simple, paperless way to request, approve, and track time off.
+**Recharge** (`recharge.ro`) is a leave & absence management platform for Romanian small and medium businesses — think **"Timetastic, but built for Romania"**. It replaces Excel sheets, WhatsApp messages, and paper request forms with a simple, paperless way to request, approve, and track time off.
 
 Reference product: [timetastic.co.uk](https://timetastic.co.uk) — a UK staff holiday planner used by 8,000+ businesses. Recharge adapts the same core idea (request → approve → calendar) to the Romanian context: local leave types, Romanian public holidays, RON pricing, and a Romanian-first UI.
 

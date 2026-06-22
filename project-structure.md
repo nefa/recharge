@@ -18,7 +18,7 @@ Companion doc to [product-owner.md](./product-owner.md). Describes the technical
 ## 2. Repository Layout
 
 ```
-supervacanta/
+recharge/
 ├── apps/
 │   ├── web/                # Next.js app
 │   │   ├── app/
