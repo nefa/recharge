@@ -2,9 +2,9 @@ services:
   postgres:
     image: postgres:16-alpine
     environment:
-      POSTGRES_USER: supervacanta
-      POSTGRES_PASSWORD: supervacanta
-      POSTGRES_DB: supervacanta
+      POSTGRES_USER: recharge
+      POSTGRES_PASSWORD: recharge
+      POSTGRES_DB: recharge
     ports:
       - "5432:5432"
     volumes:
