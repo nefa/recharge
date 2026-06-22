@@ -2,7 +2,7 @@
 
 ## Context
 
-Recharge (`supervacanta.ro`) is a leave-management SaaS targeting Romanian SMEs. Most users are company admins and their employees — typically using personal or basic company email, rarely with Google Workspace or SSO infrastructure.
+Recharge (`recharge.ro`) is a leave-management SaaS targeting Romanian SMEs. Most users are company admins and their employees — typically using personal or basic company email, rarely with Google Workspace or SSO infrastructure.
 
 ---
 
