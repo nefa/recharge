@@ -69,3 +69,6 @@ packages/ui/src/
 | `apps/web` | Vercel |
 | `apps/api` + PostgreSQL | Railway / Render / Fly.io |
 | `apps/storybook` | Chromatic / Vercel |
+
+Email: admin@techro.ro
+Password: password123
