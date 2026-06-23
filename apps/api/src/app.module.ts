@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { LeaveTypesModule } from './leave-types/leave-types.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { RolesGuard } from './auth/guards/roles.guard';
 import { Company } from './entities/company.entity';
@@ -42,6 +43,7 @@ import { RefreshToken } from './entities/refresh-token.entity';
     }),
     AuthModule,
     UsersModule,
+    LeaveTypesModule,
   ],
   controllers: [AppController],
   providers: [

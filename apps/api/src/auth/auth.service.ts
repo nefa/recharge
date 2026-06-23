@@ -14,6 +14,7 @@ import { Role } from '../entities/enums';
 import { Company } from '../entities/company.entity';
 import { RefreshToken } from '../entities/refresh-token.entity';
 import { RegisterDto } from './dto/register.dto';
+import { LeaveTypesService } from '../leave-types/leave-types.service';
 
 @Injectable()
 export class AuthService {
@@ -24,6 +25,7 @@ export class AuthService {
     private jwtService: JwtService,
     private config: ConfigService,
     private dataSource: DataSource,
+    private leaveTypesService: LeaveTypesService,
   ) {}
 
   async register(dto: RegisterDto) {
@@ -45,6 +47,8 @@ export class AuthService {
         companyId: company.id,
       });
       await manager.save(user);
+
+      await this.leaveTypesService.seedDefaults(company.id, manager);
 
       const tokens = await this.generateTokens(user, manager);
       return {
