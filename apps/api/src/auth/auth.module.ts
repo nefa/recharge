@@ -10,6 +10,7 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { User } from '../entities/user.entity';
 import { Company } from '../entities/company.entity';
 import { RefreshToken } from '../entities/refresh-token.entity';
+import { LeaveTypesModule } from '../leave-types/leave-types.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { RefreshToken } from '../entities/refresh-token.entity';
       }),
     }),
     TypeOrmModule.forFeature([User, Company, RefreshToken]),
+    LeaveTypesModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy, LocalStrategy],
