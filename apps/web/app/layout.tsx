@@ -1,23 +1,30 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import Providers from "./providers";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale, getMessages } from 'next-intl/server';
+import Providers from './providers';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Super Vacanta",
-  description: "Leave management for Romanian businesses",
+  title: 'Recharge',
+  description: 'Leave management for Romanian businesses',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="ro" className={inter.className}>
+    <html lang={locale} className={inter.className}>
       <body>
-        <Providers>{children}</Providers>
+        <NextIntlClientProvider messages={messages}>
+          <Providers>{children}</Providers>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
