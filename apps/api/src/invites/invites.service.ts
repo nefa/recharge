@@ -12,6 +12,7 @@ import { Invite } from '../entities/invite.entity';
 import { User } from '../entities/user.entity';
 import { Role } from '../entities/enums';
 import { LeaveBalancesService } from '../leave-balances/leave-balances.service';
+import { NotificationsService } from '../notifications/notifications.service';
 import { CreateInviteDto } from './dto/create-invite.dto';
 import { AcceptInviteDto } from './dto/accept-invite.dto';
 
@@ -22,6 +23,7 @@ export class InvitesService {
     @InjectRepository(User) private userRepo: Repository<User>,
     private dataSource: DataSource,
     private leaveBalancesService: LeaveBalancesService,
+    private notificationsService: NotificationsService,
   ) {}
 
   async create(companyId: string, dto: CreateInviteDto) {
@@ -51,7 +53,19 @@ export class InvitesService {
       expiresAt,
     });
 
-    return this.inviteRepo.save(invite);
+    const saved = await this.inviteRepo.save(invite);
+
+    const company = await this.inviteRepo.findOne({
+      where: { id: saved.id },
+      relations: { company: true },
+    });
+    this.notificationsService.sendInviteEmail(
+      dto.email,
+      company?.company?.name ?? '',
+      saved.token,
+    );
+
+    return saved;
   }
 
   async validate(token: string) {
