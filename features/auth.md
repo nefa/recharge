@@ -83,13 +83,13 @@ User clicks Logout
 - `apps/api/src/auth/decorators/roles.decorator.ts`
 - `apps/api/src/auth/decorators/current-user.decorator.ts`
 
-## Frontend Files
-- `apps/web/lib/api-client.ts` — fetch wrapper with 401 → refresh → retry
+## Frontend Files (in [recharge-web](https://github.com/nefa/recharge-web))
+- `apps/web/lib/api-client.ts` — fetch wrapper with 401 -> refresh -> retry
 - `apps/web/lib/auth-context.tsx` — React context: user, login, register, logout
 - `apps/web/app/(auth)/layout.tsx` — centered layout, redirects logged-in users
 - `apps/web/app/(auth)/login/page.tsx`
 - `apps/web/app/(auth)/register/page.tsx`
-- `apps/web/middleware.ts` — route protection (passthrough, auth handled client-side)
+- `apps/web/proxy.ts` — Next.js proxy rewrites /api/* to backend
 
 ## API Endpoints
 | Method | Path | Auth | Description |

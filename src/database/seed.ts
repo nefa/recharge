@@ -55,11 +55,12 @@ async function seed() {
   const queryRunner = dataSource.createQueryRunner();
   await queryRunner.connect();
 
-  // Clean existing data in correct order
+  // Clean existing data in correct order (respect FK constraints)
   await queryRunner.query('DELETE FROM leave_requests');
   await queryRunner.query('DELETE FROM leave_balances');
   await queryRunner.query('DELETE FROM refresh_tokens');
   await queryRunner.query('DELETE FROM invites');
+  await queryRunner.query('UPDATE departments SET manager_id = NULL');
   await queryRunner.query('DELETE FROM users');
   await queryRunner.query('DELETE FROM departments');
   await queryRunner.query('DELETE FROM leave_types');

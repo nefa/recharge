@@ -22,7 +22,7 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@recharge/shared": ["../../packages/shared/src/index.ts"]
+      "@recharge/shared": ["./src/shared/index.ts"]
     }
   },
   "include": ["src/**/*"],

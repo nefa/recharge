@@ -1,25 +1,11 @@
-# Recharge — Full Implementation Plan
+# Recharge — Implementation Plan (Completed)
+
+> **Note:** This plan was written during initial development. All phases have been implemented.
+> The project has since been split into two repos: [recharge-api](https://github.com/nefa/recharge-api) and [recharge-web](https://github.com/nefa/recharge-web), both using Bun.
 
 ## Context
 
-**Recharge** is a Timetastic-style leave management platform for Romanian SMEs. The goal is a portfolio-grade full-stack app: admin creates a company, invites employees, employees request time off, managers approve/decline, everyone sees a team calendar.
-
-**What exists today:**
-- Monorepo scaffold (npm workspaces): `apps/web` (Next.js 16), `apps/api` (NestJS 11), `apps/storybook`, `packages/ui`, `packages/shared`
-- 6 UI components in `packages/ui`: Button, Card/StatCard, AppBar, Sidebar, Avatar, StatusBadge — all with Storybook stories
-- Design tokens (teal primary, Inter font, MUI v9 theme)
-- Shared enums: `Role`, `LeaveStatus`, `LeaveCategory`
-- Docker Compose for PostgreSQL 16
-- Docs: `product-owner.md`, `project-structure.md`, `authentication-strategies.md`
-- Backend: only a health endpoint. Frontend: only a placeholder page.
-
-**What Timetastic offers (that we're cloning for MVP):**
-- Leave booking with date picker + leave type selection
-- Approval workflow (employee requests → manager approves/declines via email or app)
-- Team wallchart: month grid, rows = employees, columns = days, colored cells = leave
-- Individual calendars with allowance tracking
-- Departments, public holidays, notifications
-- Mobile-friendly responsive UI
+**Super Vacanta** is a Timetastic-style leave management platform for Romanian SMEs. A portfolio-grade full-stack app: admin creates a company, invites employees, employees request time off, managers approve/decline, everyone sees a team calendar.
 
 ---
 

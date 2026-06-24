@@ -65,7 +65,7 @@ POST /api/invites/:token/accept
 - `apps/api/src/invites/dto/create-invite.dto.ts`
 - `apps/api/src/invites/dto/accept-invite.dto.ts`
 
-## Frontend (Phase 2)
+## Frontend (in [recharge-web](https://github.com/nefa/recharge-web))
 - `apps/web/app/(auth)/invite/[token]/page.tsx` — validate + accept form
 
 ## API Endpoints

@@ -1,9 +1,5 @@
 node_modules/
-.next/
 dist/
-build/
-.storybook-out/
-storybook-static/
 
 .env
 .env.local
@@ -11,5 +7,4 @@ storybook-static/
 
 *.log
 .DS_Store
-# next-agents-md
-.next-docs/
+bun.lock
