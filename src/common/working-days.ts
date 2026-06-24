@@ -8,14 +8,14 @@ export function calculateWorkingDays(
   const end = new Date(endDate);
 
   while (current <= end) {
-    const day = current.getDay();
+    const day = current.getUTCDay();
     const dateStr = current.toISOString().split('T')[0];
 
     if (day !== 0 && day !== 6 && !holidayDates.has(dateStr)) {
       count++;
     }
 
-    current.setDate(current.getDate() + 1);
+    current.setUTCDate(current.getUTCDate() + 1);
   }
 
   return count;
