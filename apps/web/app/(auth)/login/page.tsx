@@ -14,10 +14,12 @@ import NextLink from 'next/link';
 import { Button } from '@recharge/ui';
 import { useAuth } from '@/lib/auth-context';
 import { ApiError } from '@/lib/api-client';
+import { useTranslations } from 'next-intl';
 
 export default function LoginPage() {
   const router = useRouter();
   const { login } = useAuth();
+  const t = useTranslations();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -35,7 +37,7 @@ export default function LoginPage() {
         const data = err.data as { message?: string };
         setError(data.message ?? 'Invalid credentials');
       } else {
-        setError('Something went wrong');
+        setError(t('common.error'));
       }
     } finally {
       setLoading(false);
@@ -45,10 +47,10 @@ export default function LoginPage() {
   return (
     <Paper sx={{ p: 4 }}>
       <Typography variant="h5" sx={{ mb: 1, fontWeight: 700 }}>
-        Recharge
+        {t('common.appName')}
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Log in to your account
+        {t('auth.loginCta')}
       </Typography>
 
       {error && (
@@ -59,7 +61,7 @@ export default function LoginPage() {
 
       <Box component="form" onSubmit={handleSubmit}>
         <TextField
-          label="Email"
+          label={t('auth.email')}
           type="email"
           fullWidth
           required
@@ -68,7 +70,7 @@ export default function LoginPage() {
           sx={{ mb: 2 }}
         />
         <TextField
-          label="Password"
+          label={t('auth.password')}
           type="password"
           fullWidth
           required
@@ -83,16 +85,34 @@ export default function LoginPage() {
           loading={loading}
           sx={{ mb: 2 }}
         >
-          Log In
+          {t('auth.login')}
         </Button>
       </Box>
 
       <Typography variant="body2" align="center">
-        Don&apos;t have an account?{' '}
+        {t('auth.noAccount')}{' '}
         <MuiLink component={NextLink} href="/register">
-          Register
+          {t('auth.register')}
         </MuiLink>
       </Typography>
+
+      <Box
+        sx={{
+          mt: 3,
+          p: 2,
+          bgcolor: 'grey.50',
+          borderRadius: 1,
+          border: '1px dashed',
+          borderColor: 'grey.300',
+        }}
+      >
+        <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.5 }}>
+          {t('demo.credentials')}
+        </Typography>
+        <Typography variant="body2" sx={{ fontFamily: 'monospace', fontSize: 13 }}>
+          admin@techro.ro / password123
+        </Typography>
+      </Box>
     </Paper>
   );
 }

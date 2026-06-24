@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { Box, CircularProgress } from '@mui/material';
 import {
@@ -12,12 +13,15 @@ import {
 } from '@mui/icons-material';
 import { AppBar, Sidebar, Avatar } from '@recharge/ui';
 import { useAuth } from '@/lib/auth-context';
+import { useTranslations } from 'next-intl';
+import LocaleSwitcher from '@/lib/components/locale-switcher';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const { user, isLoading, logout } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const t = useTranslations('nav');
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -42,19 +46,19 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   const sidebarItems = [
     {
-      label: 'Dashboard',
+      label: t('dashboard'),
       icon: <Dashboard />,
       active: pathname === '/dashboard',
       onClick: () => router.push('/dashboard'),
     },
     {
-      label: 'Calendar',
+      label: t('calendar'),
       icon: <CalendarMonth />,
       active: pathname === '/calendar',
       onClick: () => router.push('/calendar'),
     },
     {
-      label: 'My Requests',
+      label: t('requests'),
       icon: <EventNote />,
       active: pathname.startsWith('/requests'),
       onClick: () => router.push('/requests'),
@@ -62,7 +66,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     ...(user?.role !== 'employee'
       ? [
           {
-            label: 'Team',
+            label: t('team'),
             icon: <Group />,
             active: pathname === '/team',
             onClick: () => router.push('/team'),
@@ -72,7 +76,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     ...(user?.role === 'admin'
       ? [
           {
-            label: 'Settings',
+            label: t('settings'),
             icon: <Settings />,
             active: pathname === '/settings',
             onClick: () => router.push('/settings'),
@@ -85,10 +89,15 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <AppBar
         companyName={user?.companyName ?? 'Recharge'}
-        userMenu={<Avatar name={user?.name ?? ''} size="small" />}
+        userMenu={
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <LocaleSwitcher />
+            <Avatar name={user?.name ?? ''} size="small" />
+          </Box>
+        }
         menuItems={[
           {
-            label: 'Logout',
+            label: t('logout'),
             onClick: async () => {
               await logout();
               router.push('/login');

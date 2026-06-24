@@ -7,10 +7,12 @@ import { useAuth } from '@/lib/auth-context';
 import { useDashboard, useTeamDashboard } from '@/lib/hooks/use-dashboard';
 import { approveRequest, declineRequest } from '@/lib/hooks/use-leave-requests';
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import type { StatusType } from '@recharge/ui';
 
 export default function DashboardPage() {
   const { user } = useAuth();
+  const t = useTranslations();
   const { data, loading, refresh } = useDashboard();
   const { data: teamData, loading: teamLoading, refresh: refreshTeam } = useTeamDashboard();
   const [actionError, setActionError] = useState<string | null>(null);
@@ -62,7 +64,7 @@ export default function DashboardPage() {
   return (
     <Box sx={{ p: 3 }}>
       <Typography variant="h4" sx={{ mb: 3 }}>
-        Dashboard
+        {t('nav.dashboard')}
       </Typography>
 
       {actionError && (
@@ -74,7 +76,7 @@ export default function DashboardPage() {
       <Grid container spacing={3} sx={{ mb: 3 }}>
         <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <StatCard
-            label="Annual Leave Balance"
+            label={t('dashboard.leaveBalance')}
             value={annualBalance ? `${annualBalance.remainingDays} / ${annualBalance.allowanceDays}` : '—'}
             icon={<BeachAccess />}
             color="primary"
@@ -82,7 +84,7 @@ export default function DashboardPage() {
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <StatCard
-            label="Pending Requests"
+            label={t('dashboard.pendingRequests')}
             value={pendingCount}
             icon={<HourglassTop />}
             color="warning"
@@ -90,7 +92,7 @@ export default function DashboardPage() {
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <StatCard
-            label="Days Used This Year"
+            label={t('dashboard.daysUsed')}
             value={usedDays}
             icon={<EventAvailable />}
             color="success"
@@ -99,16 +101,16 @@ export default function DashboardPage() {
       </Grid>
 
       {isManagerOrAdmin && teamData && teamData.pendingRequests.length > 0 && (
-        <Card title="Pending Approvals" sx={{ mb: 3 }}>
+        <Card title={t('dashboard.pendingApprovals')} sx={{ mb: 3 }}>
           <TableContainer>
             <Table size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell>Employee</TableCell>
-                  <TableCell>Type</TableCell>
-                  <TableCell>Dates</TableCell>
-                  <TableCell>Days</TableCell>
-                  <TableCell align="right">Actions</TableCell>
+                  <TableCell>{t('table.name')}</TableCell>
+                  <TableCell>{t('table.type')}</TableCell>
+                  <TableCell>{t('table.dates')}</TableCell>
+                  <TableCell>{t('table.days')}</TableCell>
+                  <TableCell align="right">{t('table.actions')}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -146,7 +148,7 @@ export default function DashboardPage() {
       )}
 
       {isManagerOrAdmin && teamData && teamData.teamOnLeaveToday.length > 0 && (
-        <Card title="Team On Leave Today" sx={{ mb: 3 }}>
+        <Card title={t('dashboard.teamOnLeave')} sx={{ mb: 3 }}>
           <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
             {teamData.teamOnLeaveToday.map((t) => (
               <Chip
@@ -162,7 +164,7 @@ export default function DashboardPage() {
 
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 6 }}>
-          <Card title="Upcoming Leave">
+          <Card title={t('dashboard.upcomingLeave')}>
             {data?.upcomingRequests && data.upcomingRequests.length > 0 ? (
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 {data.upcomingRequests.map((r) => (
@@ -181,23 +183,23 @@ export default function DashboardPage() {
               </Box>
             ) : (
               <Typography variant="body2" color="text.secondary">
-                No upcoming leave scheduled.
+                {t('dashboard.noUpcoming')}
               </Typography>
             )}
           </Card>
         </Grid>
 
         <Grid size={{ xs: 12, md: 6 }}>
-          <Card title="Recent Requests">
+          <Card title={t('dashboard.recentRequests')}>
             {data?.recentRequests && data.recentRequests.length > 0 ? (
               <TableContainer>
                 <Table size="small">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Dates</TableCell>
-                      <TableCell>Type</TableCell>
-                      <TableCell>Days</TableCell>
-                      <TableCell>Status</TableCell>
+                      <TableCell>{t('table.dates')}</TableCell>
+                      <TableCell>{t('table.type')}</TableCell>
+                      <TableCell>{t('table.days')}</TableCell>
+                      <TableCell>{t('table.status')}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -216,7 +218,7 @@ export default function DashboardPage() {
               </TableContainer>
             ) : (
               <Typography variant="body2" color="text.secondary">
-                No requests yet.
+                {t('dashboard.noRecent')}
               </Typography>
             )}
           </Card>

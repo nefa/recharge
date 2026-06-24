@@ -14,9 +14,11 @@ import { Button, Card } from '@recharge/ui';
 import { useLeaveTypes, createLeaveRequest } from '@/lib/hooks/use-leave-requests';
 import { useLeaveBalances } from '@/lib/hooks/use-leave-balances';
 import { ApiError } from '@/lib/api-client';
+import { useTranslations } from 'next-intl';
 
 export default function NewRequestPage() {
   const router = useRouter();
+  const t = useTranslations();
   const { leaveTypes, loading: ltLoading, error: ltError } = useLeaveTypes();
   const { balances } = useLeaveBalances();
 
@@ -46,9 +48,9 @@ export default function NewRequestPage() {
     } catch (err) {
       if (err instanceof ApiError) {
         const data = err.data as { message?: string };
-        setError(data?.message ?? 'Failed to create request');
+        setError(data?.message ?? t('common.error'));
       } else {
-        setError('Failed to create request');
+        setError(t('common.error'));
       }
     } finally {
       setSubmitting(false);
@@ -58,7 +60,7 @@ export default function NewRequestPage() {
   return (
     <Box sx={{ p: 3, maxWidth: 600 }}>
       <Typography variant="h4" sx={{ mb: 3 }}>
-        New Leave Request
+        {t('requests.newRequest')}
       </Typography>
 
       {(error || ltError) && (
@@ -71,16 +73,16 @@ export default function NewRequestPage() {
         <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
           <TextField
             select
-            label="Leave Type"
+            label={t('requests.leaveType')}
             value={leaveTypeId}
             onChange={(e) => setLeaveTypeId(e.target.value)}
             required
             disabled={ltLoading || leaveTypes.length === 0}
-            helperText={ltLoading ? 'Loading leave types...' : undefined}
+            helperText={ltLoading ? t('common.loading') : undefined}
           >
             {leaveTypes.length === 0 ? (
               <MenuItem disabled value="">
-                {ltLoading ? 'Loading...' : 'No leave types available'}
+                {ltLoading ? t('common.loading') : t('common.noResults')}
               </MenuItem>
             ) : (
               leaveTypes.map((lt) => (
@@ -97,21 +99,21 @@ export default function NewRequestPage() {
           {selectedBalance && (
             <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
               <Typography variant="body2" color="text.secondary">
-                Balance:
+                {t('requests.remainingBalance')}:
               </Typography>
               <Chip
-                label={`${selectedBalance.remainingDays} days remaining`}
+                label={t('requests.days', { count: selectedBalance.remainingDays })}
                 size="small"
                 color={selectedBalance.remainingDays > 0 ? 'success' : 'error'}
               />
               {selectedType && !selectedType.requiresApproval && (
-                <Chip label="Auto-approved" size="small" color="info" />
+                <Chip label={t('status.approved')} size="small" color="info" />
               )}
             </Box>
           )}
 
           <TextField
-            label="Start Date"
+            label={t('requests.startDate')}
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
@@ -120,7 +122,7 @@ export default function NewRequestPage() {
           />
 
           <TextField
-            label="End Date"
+            label={t('requests.endDate')}
             type="date"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
@@ -129,7 +131,7 @@ export default function NewRequestPage() {
           />
 
           <TextField
-            label="Note (optional)"
+            label={t('requests.note')}
             value={note}
             onChange={(e) => setNote(e.target.value)}
             multiline
@@ -142,13 +144,13 @@ export default function NewRequestPage() {
               variant="contained"
               disabled={submitting || !leaveTypeId || !startDate || !endDate}
             >
-              {submitting ? 'Submitting...' : 'Submit Request'}
+              {submitting ? t('common.loading') : t('requests.submit')}
             </Button>
             <Button
               variant="outlined"
               onClick={() => router.push('/requests')}
             >
-              Cancel
+              {t('common.cancel')}
             </Button>
           </Box>
         </Box>

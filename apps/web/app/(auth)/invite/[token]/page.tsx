@@ -12,9 +12,11 @@ import {
 } from '@mui/material';
 import { Button } from '@recharge/ui';
 import { apiClient, ApiError } from '@/lib/api-client';
+import { useTranslations } from 'next-intl';
 import type { InviteValidationResponse } from '@recharge/shared';
 
 export default function InviteAcceptPage() {
+  const t = useTranslations();
   const params = useParams();
   const router = useRouter();
   const token = params.token as string;
@@ -49,11 +51,11 @@ export default function InviteAcceptPage() {
     setError(null);
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError(t('invite.passwordMismatch'));
       return;
     }
     if (password.length < 8) {
-      setError('Password must be at least 8 characters');
+      setError(t('invite.passwordMinLength'));
       return;
     }
 
@@ -80,7 +82,7 @@ export default function InviteAcceptPage() {
     return (
       <Paper sx={{ p: 4, textAlign: 'center' }}>
         <CircularProgress />
-        <Typography variant="body2" sx={{ mt: 2 }}>Validating invite...</Typography>
+        <Typography variant="body2" sx={{ mt: 2 }}>{t('invite.validating')}</Typography>
       </Paper>
     );
   }
@@ -88,9 +90,9 @@ export default function InviteAcceptPage() {
   if (validationError) {
     return (
       <Paper sx={{ p: 4 }}>
-        <Typography variant="h5" sx={{ mb: 2, fontWeight: 700 }}>Invalid Invite</Typography>
+        <Typography variant="h5" sx={{ mb: 2, fontWeight: 700 }}>{t('invite.invalid')}</Typography>
         <Alert severity="error" sx={{ mb: 2 }}>{validationError}</Alert>
-        <Button variant="outlined" onClick={() => router.push('/login')}>Go to Login</Button>
+        <Button variant="outlined" onClick={() => router.push('/login')}>{t('auth.login')}</Button>
       </Paper>
     );
   }
@@ -98,11 +100,11 @@ export default function InviteAcceptPage() {
   if (success) {
     return (
       <Paper sx={{ p: 4 }}>
-        <Typography variant="h5" sx={{ mb: 2, fontWeight: 700 }}>Welcome!</Typography>
+        <Typography variant="h5" sx={{ mb: 2, fontWeight: 700 }}>{t('invite.welcome')}</Typography>
         <Alert severity="success" sx={{ mb: 2 }}>
-          Your account has been created. You can now log in.
+          {t('invite.accountCreated')}
         </Alert>
-        <Button variant="contained" onClick={() => router.push('/login')}>Log In</Button>
+        <Button variant="contained" onClick={() => router.push('/login')}>{t('auth.login')}</Button>
       </Paper>
     );
   }
@@ -110,10 +112,10 @@ export default function InviteAcceptPage() {
   return (
     <Paper sx={{ p: 4 }}>
       <Typography variant="h5" sx={{ mb: 1, fontWeight: 700 }}>
-        Join {invite?.companyName}
+        {t('invite.joinCompany', { company: invite?.companyName ?? '' })}
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        You&apos;ve been invited as {invite?.role}. Set up your account below.
+        {t('invite.invitedAs', { role: invite?.role ?? '' })}
       </Typography>
 
       {error && (
@@ -122,14 +124,14 @@ export default function InviteAcceptPage() {
 
       <Box component="form" onSubmit={handleSubmit}>
         <TextField
-          label="Email"
+          label={t('auth.email')}
           value={invite?.email ?? ''}
           fullWidth
           disabled
           sx={{ mb: 2 }}
         />
         <TextField
-          label="Your Name"
+          label={t('auth.yourName')}
           value={name}
           onChange={(e) => setName(e.target.value)}
           fullWidth
@@ -137,7 +139,7 @@ export default function InviteAcceptPage() {
           sx={{ mb: 2 }}
         />
         <TextField
-          label="Password"
+          label={t('auth.password')}
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -146,7 +148,7 @@ export default function InviteAcceptPage() {
           sx={{ mb: 2 }}
         />
         <TextField
-          label="Confirm Password"
+          label={t('auth.confirmPassword')}
           type="password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
@@ -155,7 +157,7 @@ export default function InviteAcceptPage() {
           sx={{ mb: 3 }}
         />
         <Button type="submit" variant="contained" fullWidth disabled={submitting}>
-          {submitting ? 'Creating Account...' : 'Create Account'}
+          {submitting ? t('invite.creatingAccount') : t('invite.createAccount')}
         </Button>
       </Box>
     </Paper>

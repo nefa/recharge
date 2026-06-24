@@ -14,10 +14,12 @@ import NextLink from 'next/link';
 import { Button } from '@recharge/ui';
 import { useAuth } from '@/lib/auth-context';
 import { ApiError } from '@/lib/api-client';
+import { useTranslations } from 'next-intl';
 
 export default function RegisterPage() {
   const router = useRouter();
   const { register } = useAuth();
+  const t = useTranslations();
   const [companyName, setCompanyName] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -31,11 +33,11 @@ export default function RegisterPage() {
     setError('');
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError(t('invite.passwordMismatch'));
       return;
     }
     if (password.length < 8) {
-      setError('Password must be at least 8 characters');
+      setError(t('invite.passwordMinLength'));
       return;
     }
 
@@ -49,9 +51,9 @@ export default function RegisterPage() {
         const msg = Array.isArray(data.message)
           ? data.message[0]
           : data.message;
-        setError(msg ?? 'Registration failed');
+        setError(msg ?? t('common.error'));
       } else {
-        setError('Something went wrong');
+        setError(t('common.error'));
       }
     } finally {
       setLoading(false);
@@ -61,10 +63,10 @@ export default function RegisterPage() {
   return (
     <Paper sx={{ p: 4 }}>
       <Typography variant="h5" sx={{ mb: 1, fontWeight: 700 }}>
-        Recharge
+        {t('common.appName')}
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Create your company account
+        {t('auth.registerCta')}
       </Typography>
 
       {error && (
@@ -75,7 +77,7 @@ export default function RegisterPage() {
 
       <Box component="form" onSubmit={handleSubmit}>
         <TextField
-          label="Company Name"
+          label={t('auth.companyName')}
           fullWidth
           required
           value={companyName}
@@ -83,7 +85,7 @@ export default function RegisterPage() {
           sx={{ mb: 2 }}
         />
         <TextField
-          label="Your Name"
+          label={t('auth.yourName')}
           fullWidth
           required
           value={name}
@@ -91,7 +93,7 @@ export default function RegisterPage() {
           sx={{ mb: 2 }}
         />
         <TextField
-          label="Email"
+          label={t('auth.email')}
           type="email"
           fullWidth
           required
@@ -100,7 +102,7 @@ export default function RegisterPage() {
           sx={{ mb: 2 }}
         />
         <TextField
-          label="Password"
+          label={t('auth.password')}
           type="password"
           fullWidth
           required
@@ -109,7 +111,7 @@ export default function RegisterPage() {
           sx={{ mb: 2 }}
         />
         <TextField
-          label="Confirm Password"
+          label={t('auth.confirmPassword')}
           type="password"
           fullWidth
           required
@@ -124,14 +126,14 @@ export default function RegisterPage() {
           loading={loading}
           sx={{ mb: 2 }}
         >
-          Register
+          {t('auth.register')}
         </Button>
       </Box>
 
       <Typography variant="body2" align="center">
-        Already have an account?{' '}
+        {t('auth.hasAccount')}{' '}
         <MuiLink component={NextLink} href="/login">
-          Log In
+          {t('auth.login')}
         </MuiLink>
       </Typography>
     </Paper>

@@ -25,6 +25,7 @@ import { PersonAdd } from '@mui/icons-material';
 import { Button, Card, Avatar } from '@recharge/ui';
 import { useAuth } from '@/lib/auth-context';
 import { apiClient, ApiError } from '@/lib/api-client';
+import { useTranslations } from 'next-intl';
 import type { DepartmentResponse } from '@recharge/shared';
 
 interface CompanyUser {
@@ -46,6 +47,7 @@ interface InviteRecord {
 
 export default function TeamPage() {
   const { user } = useAuth();
+  const t = useTranslations();
   const isAdmin = user?.role === 'admin';
 
   const [users, setUsers] = useState<CompanyUser[]>([]);
@@ -93,10 +95,10 @@ export default function TeamPage() {
   return (
     <Box sx={{ p: 3 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h4">Team</Typography>
+        <Typography variant="h4">{t('team.title')}</Typography>
         {isAdmin && (
           <Button variant="contained" startIcon={<PersonAdd />} onClick={() => setInviteOpen(true)}>
-            Invite Employee
+            {t('team.inviteEmployee')}
           </Button>
         )}
       </Box>
@@ -109,10 +111,10 @@ export default function TeamPage() {
               <Grid key={dept.id} size={{ xs: 12, sm: 6, md: 4 }}>
                 <Card title={dept.name}>
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                    Manager: {dept.managerName ?? 'Not assigned'}
+                    {t('team.manager')}: {dept.managerName ?? '—'}
                   </Typography>
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                    {dept.memberCount} member{dept.memberCount !== 1 ? 's' : ''}
+                    {dept.memberCount} {t('team.members').toLowerCase()}
                   </Typography>
                   {members.length > 0 && (
                     <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap', mt: 1 }}>
@@ -128,15 +130,15 @@ export default function TeamPage() {
         </Grid>
       )}
 
-      <Card title="All Employees">
+      <Card title={t('team.allEmployees')}>
         <TableContainer>
           <Table size="small">
             <TableHead>
               <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Role</TableCell>
-                <TableCell>Department</TableCell>
+                <TableCell>{t('table.name')}</TableCell>
+                <TableCell>{t('table.email')}</TableCell>
+                <TableCell>{t('team.role')}</TableCell>
+                <TableCell>{t('team.department')}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -161,14 +163,14 @@ export default function TeamPage() {
       </Card>
 
       {isAdmin && pendingInvites.length > 0 && (
-        <Card title="Pending Invites" sx={{ mt: 3 }}>
+        <Card title={t('invite.pendingInvites')} sx={{ mt: 3 }}>
           <TableContainer>
             <Table size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Role</TableCell>
-                  <TableCell>Expires</TableCell>
+                  <TableCell>{t('table.email')}</TableCell>
+                  <TableCell>{t('team.role')}</TableCell>
+                  <TableCell>{t('invite.expires')}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -191,6 +193,7 @@ export default function TeamPage() {
 }
 
 function InviteDialog({ open, onClose, onSuccess }: { open: boolean; onClose: () => void; onSuccess: () => void }) {
+  const t = useTranslations();
   const [email, setEmail] = useState('');
   const [role, setRole] = useState('employee');
   const [submitting, setSubmitting] = useState(false);
@@ -224,19 +227,19 @@ function InviteDialog({ open, onClose, onSuccess }: { open: boolean; onClose: ()
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
       <Box component="form" onSubmit={handleSubmit}>
-        <DialogTitle>Invite Employee</DialogTitle>
+        <DialogTitle>{t('team.inviteEmployee')}</DialogTitle>
         <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: '16px !important' }}>
           {error && <Alert severity="error">{error}</Alert>}
-          <TextField label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required fullWidth />
-          <TextField select label="Role" value={role} onChange={(e) => setRole(e.target.value)} fullWidth>
-            <MenuItem value="employee">Employee</MenuItem>
-            <MenuItem value="manager">Manager</MenuItem>
+          <TextField label={t('auth.email')} type="email" value={email} onChange={(e) => setEmail(e.target.value)} required fullWidth />
+          <TextField select label={t('team.role')} value={role} onChange={(e) => setRole(e.target.value)} fullWidth>
+            <MenuItem value="employee">{t('team.employee')}</MenuItem>
+            <MenuItem value="manager">{t('team.manager_role')}</MenuItem>
           </TextField>
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 2 }}>
-          <Button variant="outlined" onClick={onClose}>Cancel</Button>
+          <Button variant="outlined" onClick={onClose}>{t('common.cancel')}</Button>
           <Button type="submit" variant="contained" disabled={submitting}>
-            {submitting ? 'Sending...' : 'Send Invite'}
+            {submitting ? t('invite.sending') : t('invite.sendInvite')}
           </Button>
         </DialogActions>
       </Box>
