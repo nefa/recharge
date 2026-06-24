@@ -88,7 +88,7 @@ export class CalendarService {
 
     while (current <= end) {
       const dateStr = current.toISOString().split('T')[0];
-      const dayOfWeek = current.getDay();
+      const dayOfWeek = current.getUTCDay();
 
       if (dayOfWeek === 0 || dayOfWeek === 6) {
         days.push({ date: dateStr, type: 'weekend' });
@@ -119,7 +119,7 @@ export class CalendarService {
         }
       }
 
-      current.setDate(current.getDate() + 1);
+      current.setUTCDate(current.getUTCDate() + 1);
     }
 
     return days;
