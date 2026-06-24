@@ -12,6 +12,7 @@ import { LeaveType } from '../entities/leave-type.entity';
 import { LeaveStatus, Role } from '../entities/enums';
 import { HolidaysService } from '../holidays/holidays.service';
 import { DepartmentsService } from '../departments/departments.service';
+import { NotificationsService } from '../notifications/notifications.service';
 import { calculateWorkingDays } from '../common/working-days';
 import { CreateLeaveRequestDto } from './dto/create-leave-request.dto';
 
@@ -23,6 +24,7 @@ export class LeaveRequestsService {
     @InjectRepository(LeaveType) private leaveTypeRepo: Repository<LeaveType>,
     private holidaysService: HolidaysService,
     private departmentsService: DepartmentsService,
+    private notificationsService: NotificationsService,
   ) {}
 
   async create(userId: string, companyId: string, dto: CreateLeaveRequestDto) {
@@ -90,6 +92,19 @@ export class LeaveRequestsService {
       }
     }
 
+    if (leaveType.requiresApproval) {
+      const manager = await this.departmentsService.getManagerForUser(userId);
+      if (manager) {
+        this.notificationsService.sendRequestSubmitted(manager.email, {
+          employeeName: (await this.requestRepo.findOne({ where: { id: saved.id }, relations: { user: true } }))?.user?.name ?? '',
+          leaveTypeName: leaveType.name,
+          startDate: dto.startDate,
+          endDate: dto.endDate,
+          workingDays,
+        });
+      }
+    }
+
     return this.formatRequest(
       await this.requestRepo.findOne({
         where: { id: saved.id },
@@ -151,6 +166,16 @@ export class LeaveRequestsService {
     request.decidedAt = new Date();
     await this.requestRepo.save(request);
 
+    const startStr = request.startDate instanceof Date ? request.startDate.toISOString().split('T')[0] : String(request.startDate);
+    const endStr = request.endDate instanceof Date ? request.endDate.toISOString().split('T')[0] : String(request.endDate);
+    this.notificationsService.sendRequestApproved(request.user.email, {
+      employeeName: request.user.name,
+      leaveTypeName: request.leaveType?.name ?? '',
+      startDate: startStr,
+      endDate: endStr,
+      workingDays,
+    });
+
     return this.formatRequest(request, holidayDates);
   }
 
@@ -190,6 +215,17 @@ export class LeaveRequestsService {
       new Date(request.startDate),
       new Date(request.endDate),
     );
+    const workingDays = calculateWorkingDays(new Date(request.startDate), new Date(request.endDate), holidayDates);
+    const startStr = request.startDate instanceof Date ? request.startDate.toISOString().split('T')[0] : String(request.startDate);
+    const endStr = request.endDate instanceof Date ? request.endDate.toISOString().split('T')[0] : String(request.endDate);
+    this.notificationsService.sendRequestDeclined(request.user.email, {
+      employeeName: request.user.name,
+      leaveTypeName: request.leaveType?.name ?? '',
+      startDate: startStr,
+      endDate: endStr,
+      workingDays,
+    });
+
     return this.formatRequest(request, holidayDates);
   }
 
