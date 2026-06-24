@@ -45,14 +45,14 @@ AppLayout mounts
 - **Sidebar** — responsive drawer, items with icons, active state from pathname
 - **Avatar** — user initials in the AppBar menu
 
-## Frontend Files
+## Frontend Files (in [recharge-web](https://github.com/nefa/recharge-web))
 - `apps/web/app/(app)/layout.tsx` — app shell with auth guard
 - `apps/web/app/(app)/dashboard/page.tsx` — placeholder with StatCards
 - `apps/web/app/providers.tsx` — ThemeProvider + AuthProvider
 
 ## Route Groups
 ```
-apps/web/app/
+recharge-web/apps/web/app/
 ├── (auth)/          — centered layout, no shell (login, register)
 │   ├── layout.tsx
 │   ├── login/

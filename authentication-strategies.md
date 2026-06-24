@@ -12,7 +12,8 @@ Recharge (`recharge.ro`) is a leave-management SaaS targeting Romanian SMEs. Mos
 
 | Role            | Description                                      |
 | --------------- | ------------------------------------------------ |
-| **Company Admin** | Creates the company workspace, manages employees |
+| **Company Admin** | Creates the company workspace, manages employees, configures leave types |
+| **Manager**       | Leads a department, approves/declines leave requests for their team |
 | **Employee**      | Invited by admin, manages own leave requests     |
 
 ### Auth Flows
@@ -94,7 +95,7 @@ users
   email         VARCHAR UNIQUE
   passwordHash  VARCHAR
   name          VARCHAR
-  role          ENUM('ADMIN', 'EMPLOYEE')
+  role          ENUM('admin', 'manager', 'employee')
   companyId     UUID FK -> companies.id
   createdAt     TIMESTAMP
   updatedAt     TIMESTAMP
