@@ -26,10 +26,12 @@ import { Add, Edit, Delete } from '@mui/icons-material';
 import { Button, Card } from '@recharge/ui';
 import { useAuth } from '@/lib/auth-context';
 import { apiClient, ApiError } from '@/lib/api-client';
+import { useTranslations } from 'next-intl';
 import type { LeaveTypeResponse, PublicHolidayResponse } from '@recharge/shared';
 
 export default function SettingsPage() {
   const { user } = useAuth();
+  const t = useTranslations();
   const [leaveTypes, setLeaveTypes] = useState<LeaveTypeResponse[]>([]);
   const [holidays, setHolidays] = useState<PublicHolidayResponse[]>([]);
   const [loading, setLoading] = useState(true);
@@ -82,7 +84,7 @@ export default function SettingsPage() {
 
   return (
     <Box sx={{ p: 3 }}>
-      <Typography variant="h4" sx={{ mb: 3 }}>Settings</Typography>
+      <Typography variant="h4" sx={{ mb: 3 }}>{t('settings.title')}</Typography>
 
       {deleteError && (
         <Alert severity="error" sx={{ mb: 2 }} onClose={() => setDeleteError(null)}>
@@ -90,26 +92,26 @@ export default function SettingsPage() {
         </Alert>
       )}
 
-      <Card title="Company" sx={{ mb: 3 }}>
+      <Card title={t('settings.companyInfo')} sx={{ mb: 3 }}>
         <Typography variant="body1">{user?.companyName}</Typography>
       </Card>
 
-      <Card title="Leave Types" sx={{ mb: 3 }}>
+      <Card title={t('settings.leaveTypes')} sx={{ mb: 3 }}>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
           <Button variant="outlined" size="small" startIcon={<Add />} onClick={() => setCreateOpen(true)}>
-            Add Type
+            {t('settings.addLeaveType')}
           </Button>
         </Box>
         <TableContainer>
           <Table size="small">
             <TableHead>
               <TableRow>
-                <TableCell>Color</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Default Days</TableCell>
-                <TableCell>Approval</TableCell>
-                <TableCell>Paid</TableCell>
-                <TableCell align="right">Actions</TableCell>
+                <TableCell>{t('settings.color')}</TableCell>
+                <TableCell>{t('table.name')}</TableCell>
+                <TableCell>{t('settings.defaultDays')}</TableCell>
+                <TableCell>{t('settings.requiresApproval')}</TableCell>
+                <TableCell>{t('settings.isPaid')}</TableCell>
+                <TableCell align="right">{t('table.actions')}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -137,13 +139,13 @@ export default function SettingsPage() {
         </TableContainer>
       </Card>
 
-      <Card title={`Public Holidays — ${new Date().getFullYear()}`}>
+      <Card title={`${t('settings.publicHolidays')} — ${new Date().getFullYear()}`}>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
           {holidays.map((h) => (
             <Chip key={h.id} label={`${h.date} — ${h.name}`} variant="outlined" />
           ))}
           {holidays.length === 0 && (
-            <Typography variant="body2" color="text.secondary">No holidays found.</Typography>
+            <Typography variant="body2" color="text.secondary">{t('common.noResults')}</Typography>
           )}
         </Box>
       </Card>

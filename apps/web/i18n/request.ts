@@ -3,7 +3,7 @@ import { cookies, headers } from 'next/headers';
 
 export const locales = ['ro', 'en'] as const;
 export type Locale = (typeof locales)[number];
-export const defaultLocale: Locale = 'ro';
+export const defaultLocale: Locale = 'en';
 
 export default getRequestConfig(async () => {
   const cookieStore = await cookies();
@@ -11,7 +11,7 @@ export default getRequestConfig(async () => {
 
   const cookieLocale = cookieStore.get('locale')?.value;
   const acceptLanguage = headerStore.get('accept-language') ?? '';
-  const browserLocale = acceptLanguage.includes('en') ? 'en' : 'ro';
+  const browserLocale = acceptLanguage.includes('ro') ? 'ro' : 'en';
 
   const locale = (locales.includes(cookieLocale as Locale) ? cookieLocale : browserLocale) as Locale;
 

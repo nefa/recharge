@@ -112,5 +112,39 @@
     "personal": "Zi libera personala",
     "maternity": "Concediu de maternitate",
     "paternity": "Concediu de paternitate"
+  },
+  "invite": {
+    "joinCompany": "Alatura-te la {company}",
+    "invitedAs": "Ai fost invitat ca {role}. Configureaza-ti contul mai jos.",
+    "createAccount": "Creeaza cont",
+    "creatingAccount": "Se creeaza contul...",
+    "accountCreated": "Contul tau a fost creat. Te poti autentifica acum.",
+    "welcome": "Bine ai venit!",
+    "invalid": "Invitatie invalida",
+    "validating": "Se valideaza invitatia...",
+    "passwordMismatch": "Parolele nu se potrivesc",
+    "passwordMinLength": "Parola trebuie sa aiba cel putin 8 caractere",
+    "pendingInvites": "Invitatii in asteptare",
+    "expires": "Expira",
+    "sendInvite": "Trimite invitatia",
+    "sending": "Se trimite..."
+  },
+  "table": {
+    "name": "Nume",
+    "email": "Email",
+    "dates": "Date",
+    "type": "Tip",
+    "days": "Zile",
+    "actions": "Actiuni",
+    "status": "Status",
+    "noData": "Nu sunt date de afisat."
+  },
+  "demo": {
+    "credentials": "Date de acces demo"
+  },
+  "legend": {
+    "leave": "Concediu",
+    "holiday": "Sarbatoare",
+    "weekend": "Weekend"
   }
 }

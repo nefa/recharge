@@ -12,7 +12,8 @@
     "dev:storybook": "npm run storybook -w apps/storybook",
     "build:web": "npm run build -w apps/web",
     "build:api": "npm run build -w apps/api",
-    "build:storybook": "npm run build -w apps/storybook"
+    "build:storybook": "npm run build -w apps/storybook",
+    "seed": "npm run seed -w apps/api"
   },
   "devDependencies": {
     "typescript": "^5"

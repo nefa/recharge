@@ -14,10 +14,12 @@ import { Button, Card, StatusBadge, Avatar } from '@recharge/ui';
 import { apiClient, ApiError } from '@/lib/api-client';
 import { approveRequest, declineRequest, cancelRequest } from '@/lib/hooks/use-leave-requests';
 import { useAuth } from '@/lib/auth-context';
+import { useTranslations } from 'next-intl';
 import type { LeaveRequestResponse } from '@recharge/shared';
 import type { StatusType } from '@recharge/ui';
 
 export default function RequestDetailPage() {
+  const t = useTranslations();
   const params = useParams();
   const router = useRouter();
   const { user } = useAuth();
@@ -66,7 +68,7 @@ export default function RequestDetailPage() {
   if (!request) {
     return (
       <Box sx={{ p: 3 }}>
-        <Alert severity="error">Request not found.</Alert>
+        <Alert severity="error">{t('common.noResults')}</Alert>
       </Box>
     );
   }
@@ -132,20 +134,20 @@ export default function RequestDetailPage() {
             {canApprove && (
               <>
                 <Button variant="contained" color="success" onClick={() => handleAction('approve')} disabled={acting}>
-                  Approve
+                  {t('requests.approve')}
                 </Button>
                 <Button variant="contained" color="error" onClick={() => handleAction('decline')} disabled={acting}>
-                  Decline
+                  {t('requests.decline')}
                 </Button>
               </>
             )}
             {canCancel && (
               <Button variant="outlined" color="error" onClick={() => handleAction('cancel')} disabled={acting}>
-                Cancel Request
+                {t('requests.cancelRequest')}
               </Button>
             )}
             <Button variant="outlined" onClick={() => router.push('/requests')}>
-              Back
+              {t('common.back')}
             </Button>
           </Box>
         </Box>

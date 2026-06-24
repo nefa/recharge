@@ -19,6 +19,7 @@ import {
 import { Add } from '@mui/icons-material';
 import { Button, StatusBadge, Card } from '@recharge/ui';
 import { useMyRequests } from '@/lib/hooks/use-leave-requests';
+import { useTranslations } from 'next-intl';
 import type { StatusType } from '@recharge/ui';
 
 const STATUS_TABS = ['all', 'pending', 'approved', 'declined', 'cancelled'] as const;
@@ -27,6 +28,15 @@ export default function RequestsPage() {
   const router = useRouter();
   const { requests, loading } = useMyRequests();
   const [tab, setTab] = useState(0);
+  const t = useTranslations();
+
+  const tabLabels: Record<string, string> = {
+    all: t('requests.all'),
+    pending: t('status.pending'),
+    approved: t('status.approved'),
+    declined: t('status.declined'),
+    cancelled: t('status.cancelled'),
+  };
 
   const filtered =
     tab === 0
@@ -36,20 +46,20 @@ export default function RequestsPage() {
   return (
     <Box sx={{ p: 3 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h4">My Requests</Typography>
+        <Typography variant="h4">{t('nav.requests')}</Typography>
         <Button
           variant="contained"
           startIcon={<Add />}
           onClick={() => router.push('/requests/new')}
         >
-          New Request
+          {t('requests.newRequest')}
         </Button>
       </Box>
 
       <Card>
         <Tabs value={tab} onChange={(_, v) => setTab(v)} sx={{ mb: 2 }}>
           {STATUS_TABS.map((s) => (
-            <Tab key={s} label={s.charAt(0).toUpperCase() + s.slice(1)} />
+            <Tab key={s} label={tabLabels[s]} />
           ))}
         </Tabs>
 
@@ -61,18 +71,18 @@ export default function RequestsPage() {
           </Box>
         ) : filtered.length === 0 ? (
           <Typography variant="body2" color="text.secondary" sx={{ py: 4, textAlign: 'center' }}>
-            No requests found.
+            {t('table.noData')}
           </Typography>
         ) : (
           <TableContainer>
             <Table size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell>Dates</TableCell>
-                  <TableCell>Type</TableCell>
-                  <TableCell>Working Days</TableCell>
-                  <TableCell>Status</TableCell>
-                  <TableCell>Note</TableCell>
+                  <TableCell>{t('table.dates')}</TableCell>
+                  <TableCell>{t('table.type')}</TableCell>
+                  <TableCell>{t('requests.workingDays')}</TableCell>
+                  <TableCell>{t('table.status')}</TableCell>
+                  <TableCell>{t('requests.note')}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

@@ -14,6 +14,7 @@ import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import { Card, Avatar } from '@recharge/ui';
 import { useWallchart, useDepartments } from '@/lib/hooks/use-wallchart';
 import { useAuth } from '@/lib/auth-context';
+import { useTranslations } from 'next-intl';
 import {
   format,
   startOfMonth,
@@ -30,6 +31,7 @@ const MONTH_NAMES = [
 
 export default function CalendarPage() {
   const { user } = useAuth();
+  const t = useTranslations();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [departmentId, setDepartmentId] = useState<string>('');
 
@@ -60,18 +62,18 @@ export default function CalendarPage() {
   return (
     <Box sx={{ p: 3 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h4">Calendar</Typography>
+        <Typography variant="h4">{t('nav.calendar')}</Typography>
 
         {isManagerOrAdmin && departments.length > 0 && (
           <TextField
             select
-            label="Department"
+            label={t('calendar.department')}
             value={departmentId}
             onChange={(e) => setDepartmentId(e.target.value)}
             size="small"
             sx={{ minWidth: 200 }}
           >
-            <MenuItem value="">All Departments</MenuItem>
+            <MenuItem value="">{t('calendar.allDepartments')}</MenuItem>
             {departments.map((d) => (
               <MenuItem key={d.id} value={d.id}>{d.name}</MenuItem>
             ))}
@@ -184,7 +186,7 @@ export default function CalendarPage() {
 
             {entries.length === 0 && (
               <Typography variant="body2" color="text.secondary" sx={{ py: 4, textAlign: 'center' }}>
-                No employees to display.
+                {t('table.noData')}
               </Typography>
             )}
           </Box>
@@ -192,9 +194,9 @@ export default function CalendarPage() {
 
         {/* Legend */}
         <Box sx={{ display: 'flex', gap: 3, mt: 3, pt: 2, borderTop: 1, borderColor: 'divider' }}>
-          <LegendItem color="#0B7A75" label="Leave" />
-          <LegendItem color="#FFF3E0" border="#FFB74D" label="Holiday" />
-          <LegendItem color="#F5F5F5" label="Weekend" />
+          <LegendItem color="#0B7A75" label={t('legend.leave')} />
+          <LegendItem color="#FFF3E0" border="#FFB74D" label={t('legend.holiday')} />
+          <LegendItem color="#F5F5F5" label={t('legend.weekend')} />
         </Box>
       </Card>
     </Box>
