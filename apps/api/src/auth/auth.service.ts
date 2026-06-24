@@ -15,6 +15,8 @@ import { Company } from '../entities/company.entity';
 import { RefreshToken } from '../entities/refresh-token.entity';
 import { RegisterDto } from './dto/register.dto';
 import { LeaveTypesService } from '../leave-types/leave-types.service';
+import { HolidaysService } from '../holidays/holidays.service';
+import { LeaveBalancesService } from '../leave-balances/leave-balances.service';
 
 @Injectable()
 export class AuthService {
@@ -26,6 +28,8 @@ export class AuthService {
     private config: ConfigService,
     private dataSource: DataSource,
     private leaveTypesService: LeaveTypesService,
+    private holidaysService: HolidaysService,
+    private leaveBalancesService: LeaveBalancesService,
   ) {}
 
   async register(dto: RegisterDto) {
@@ -49,6 +53,13 @@ export class AuthService {
       await manager.save(user);
 
       await this.leaveTypesService.seedDefaults(company.id, manager);
+      await this.holidaysService.seed(manager);
+      await this.leaveBalancesService.createDefaults(
+        user.id,
+        company.id,
+        new Date().getFullYear(),
+        manager,
+      );
 
       const tokens = await this.generateTokens(user, manager);
       return {
