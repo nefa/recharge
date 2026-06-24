@@ -7,6 +7,10 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { LeaveTypesModule } from './leave-types/leave-types.module';
+import { HolidaysModule } from './holidays/holidays.module';
+import { DepartmentsModule } from './departments/departments.module';
+import { InvitesModule } from './invites/invites.module';
+import { LeaveBalancesModule } from './leave-balances/leave-balances.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { RolesGuard } from './auth/guards/roles.guard';
 import { Company } from './entities/company.entity';
@@ -44,6 +48,10 @@ import { RefreshToken } from './entities/refresh-token.entity';
     AuthModule,
     UsersModule,
     LeaveTypesModule,
+    HolidaysModule,
+    DepartmentsModule,
+    InvitesModule,
+    LeaveBalancesModule,
   ],
   controllers: [AppController],
   providers: [
