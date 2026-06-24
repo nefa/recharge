@@ -12,6 +12,8 @@ import { DepartmentsModule } from './departments/departments.module';
 import { InvitesModule } from './invites/invites.module';
 import { LeaveBalancesModule } from './leave-balances/leave-balances.module';
 import { LeaveRequestsModule } from './leave-requests/leave-requests.module';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { CalendarModule } from './calendar/calendar.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { RolesGuard } from './auth/guards/roles.guard';
 import { Company } from './entities/company.entity';
@@ -54,6 +56,8 @@ import { RefreshToken } from './entities/refresh-token.entity';
     InvitesModule,
     LeaveBalancesModule,
     LeaveRequestsModule,
+    DashboardModule,
+    CalendarModule,
   ],
   controllers: [AppController],
   providers: [
