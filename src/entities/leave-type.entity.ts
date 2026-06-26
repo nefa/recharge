@@ -11,7 +11,7 @@ import { Company } from './company.entity';
 import { LeaveBalance } from './leave-balance.entity';
 import { LeaveRequest } from './leave-request.entity';
 
-@Entity('leave_types')
+@Entity('leave_type')
 export class LeaveType {
   @PrimaryGeneratedColumn('uuid')
   id: string;

@@ -9,7 +9,7 @@ import {
 import { Company } from './company.entity';
 import { Role } from './enums';
 
-@Entity('invites')
+@Entity('invite')
 export class Invite {
   @PrimaryGeneratedColumn('uuid')
   id: string;

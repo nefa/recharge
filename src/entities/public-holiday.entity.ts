@@ -5,7 +5,7 @@ import {
   Unique,
 } from 'typeorm';
 
-@Entity('public_holidays')
+@Entity('public_holiday')
 @Unique(['country', 'date'])
 export class PublicHoliday {
   @PrimaryGeneratedColumn('uuid')

@@ -15,7 +15,7 @@ import { LeaveRequest } from './leave-request.entity';
 import { RefreshToken } from './refresh-token.entity';
 import { Role } from './enums';
 
-@Entity('users')
+@Entity('app_user')
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
