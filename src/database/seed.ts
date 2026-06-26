@@ -56,16 +56,16 @@ async function seed() {
   await queryRunner.connect();
 
   // Clean existing data in correct order (respect FK constraints)
-  await queryRunner.query('DELETE FROM leave_requests');
-  await queryRunner.query('DELETE FROM leave_balances');
-  await queryRunner.query('DELETE FROM refresh_tokens');
-  await queryRunner.query('DELETE FROM invites');
-  await queryRunner.query('UPDATE departments SET manager_id = NULL');
-  await queryRunner.query('DELETE FROM users');
-  await queryRunner.query('DELETE FROM departments');
-  await queryRunner.query('DELETE FROM leave_types');
-  await queryRunner.query('DELETE FROM companies');
-  await queryRunner.query('DELETE FROM public_holidays');
+  await queryRunner.query('DELETE FROM leave_request');
+  await queryRunner.query('DELETE FROM leave_balance');
+  await queryRunner.query('DELETE FROM refresh_token');
+  await queryRunner.query('DELETE FROM invite');
+  await queryRunner.query('UPDATE department SET manager_id = NULL');
+  await queryRunner.query('DELETE FROM app_user');
+  await queryRunner.query('DELETE FROM department');
+  await queryRunner.query('DELETE FROM leave_type');
+  await queryRunner.query('DELETE FROM company');
+  await queryRunner.query('DELETE FROM public_holiday');
   await queryRunner.release();
 
   console.log('Cleaned existing data');
