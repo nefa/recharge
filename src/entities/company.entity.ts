@@ -11,7 +11,7 @@ import { Department } from './department.entity';
 import { LeaveType } from './leave-type.entity';
 import { Invite } from './invite.entity';
 
-@Entity('companies')
+@Entity('company')
 export class Company {
   @PrimaryGeneratedColumn('uuid')
   id: string;

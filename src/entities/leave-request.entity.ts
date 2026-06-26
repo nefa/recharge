@@ -10,7 +10,7 @@ import { User } from './user.entity';
 import { LeaveType } from './leave-type.entity';
 import { LeaveStatus } from './enums';
 
-@Entity('leave_requests')
+@Entity('leave_request')
 export class LeaveRequest {
   @PrimaryGeneratedColumn('uuid')
   id: string;

@@ -9,7 +9,7 @@ import {
 import { User } from './user.entity';
 import { LeaveType } from './leave-type.entity';
 
-@Entity('leave_balances')
+@Entity('leave_balance')
 @Unique(['userId', 'leaveTypeId', 'year'])
 export class LeaveBalance {
   @PrimaryGeneratedColumn('uuid')
